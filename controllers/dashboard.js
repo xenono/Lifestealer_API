@@ -14,7 +14,14 @@ exports.getPosts = async (req,res,next) => {
 }
 
 exports.createPost = async (req, res,next) => {
-	const {title, image, content, background}  = req.body
+	const image = req.file
+	if (!image) {
+		const error = new Error("No image provided.")
+		error.statusCode = 422
+		return next(error)
+	}
+	const {title, content, background}  = req.body
+	const imageUrl = req.file.path.replace("\\","/")
 	try {
 		const user = await User.findById(req.userId)
 		if (!user) {
@@ -24,7 +31,7 @@ exports.createPost = async (req, res,next) => {
 		}
 		const post = new Post({
 			title,
-			image,
+			image: imageUrl,
 			content,
 			background,
 			creator: {
@@ -35,7 +42,7 @@ exports.createPost = async (req, res,next) => {
 		})
 		await post.save()
 		res.json({success: true})
-	}catch(err) {
+	} catch(err) {
 		next(err)
 	}
 }

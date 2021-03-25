@@ -1,13 +1,15 @@
 const express = require('express')
 const router = express.Router()
+const {body} = require("express-validator")
+
+const dotenv = require('dotenv').config()
 
 const User = require("../models/user")
 
 const {isAuth} = require('../middlewares/isAuth')
 
-const {body} = require("express-validator")
+const userController = require('../controllers/user')
 
-const dotenv = require('dotenv').config()
-
+router.get('/user', isAuth, userController.getUser)
 
 module.exports = router
