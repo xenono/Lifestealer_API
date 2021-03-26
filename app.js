@@ -49,7 +49,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).array('images',2))
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 // Routes
@@ -69,7 +69,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION, {
 	useUnifiedTopology: true
 })
 	.then(() => {
-		app.listen(8080)
+		app.listen(process.env.POST || 8080)
 	})
 	.catch(err => {
 		console.log(err)

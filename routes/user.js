@@ -12,4 +12,6 @@ const userController = require('../controllers/user')
 
 router.get('/user', isAuth, userController.getUser)
 
+router.post('/editUser', isAuth, userController.editUser)
+
 module.exports = router
