@@ -43,6 +43,7 @@ app.use((req,res,next) => {
 
 	next()
 })
+app.use(express.static(path.join("client","build")))
 
 // Middlewares
 app.use(bodyParser.json())
@@ -53,12 +54,11 @@ app.use(multer({storage: fileStorage, fileFilter: fileFilter}).array('images',2)
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 // Routes
-app.use('/',(req,res,next) => {
-	res.send("<h1>Homepage</h1>")
-})
 app.use(authRoutes)
 app.use(dashboardRoutes)
 app.use(userRoutes)
+
+
 
 app.use((error,req,res,next) => {
 	const statusCode = error.statusCode || 500
@@ -72,7 +72,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION, {
 	useUnifiedTopology: true
 })
 	.then(() => {
-		app.listen(process.env.POST || 8080)
+		app.listen(process.env.PORT || 8080)
 	})
 	.catch(err => {
 		console.log(err)
