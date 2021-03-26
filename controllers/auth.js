@@ -7,9 +7,8 @@ const dotenv = require('dotenv').config()
 exports.signup = async (req, res, next) => {
 	const errors = validationResult(req)
 	if(!errors.isEmpty()){
-		const error = new Error('Email is already used')
+		const error = new Error(errors.array()[0].msg)
 		error.statusCode = 422
-		error.data = 'Email is already used'
 		return next(error)
 	}
 

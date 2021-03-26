@@ -11,7 +11,7 @@ const {body} = require("express-validator")
 const authController = require('../controllers/auth')
 
 router.post('/signup', [
-		body('email').isEmail().trim()
+		body('email').isEmail().trim().withMessage("Email is required")
 			.custom((value, {req}) => {
 				return User.findOne({email: value})
 					.then(user => {
