@@ -53,6 +53,9 @@ app.use(multer({storage: fileStorage, fileFilter: fileFilter}).array('images',2)
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 // Routes
+app.use('/',(req,res,next) => {
+	res.send("<h1>Homepage</h1>")
+})
 app.use(authRoutes)
 app.use(dashboardRoutes)
 app.use(userRoutes)

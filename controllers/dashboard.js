@@ -37,7 +37,8 @@ exports.createPost = async (req, res,next) => {
 			creator: {
 				userId: user._id,
 				name: user.name ,
-				lastname: user.lastname
+				lastname: user.lastname,
+				profileImage: user.profileImage
 			}
 		})
 		await post.save()

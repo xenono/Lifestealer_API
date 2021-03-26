@@ -17,8 +17,12 @@ const postSchema = new Schema({
 		lastname: {
 			type: String,
 			required: true,
-
 		},
+		profileImage:{
+			type: String,
+			required: true
+		}
+
 	},
 	title: {
 		type: String,
