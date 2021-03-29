@@ -14,6 +14,7 @@ exports.getPosts = async (req,res,next) => {
 }
 
 exports.createPost = async (req, res,next) => {
+	console.log(req.body)
 	const image = req.files[0]
 	if (!image) {
 		const error = new Error("No image provided.")

@@ -44,7 +44,9 @@ app.use((req,res,next) => {
 	next()
 })
 app.use(express.static(path.join("client","build")))
-
+app.get(['/','/profile','/login','/signup'], (req, res) => {
+	res.sendFile(path.join(__dirname, 'client','build', 'index.html'))
+})
 // Middlewares
 app.use(bodyParser.json())
 app.use(cookieParser())
