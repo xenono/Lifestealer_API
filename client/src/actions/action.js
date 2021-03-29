@@ -10,6 +10,8 @@ export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILED = "ADD_POST_FAILED";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
+export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
+export const GET_PROFILE_FAILED = "GET_PROFILE_FAILED";
 export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS"
 export const EDIT_USER_FAILED = "EDIT_USER_FAILED"
 
@@ -123,3 +125,5 @@ export const editUser = ({
     dispatch({type: EDIT_USER_FAILED})
   }
 };
+
+

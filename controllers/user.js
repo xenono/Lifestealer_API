@@ -39,10 +39,10 @@ exports.editUser = async (req, res, next) => {
 	const {city, country, job, workDescription, introduction, hobbyDescription} = req.body
 	let backgroundImage, profileImage
 	if (files && files[0]) {
-		backgroundImage = req.files[0].path.replace("\\", "/")
+		backgroundImage = "/" + req.files[0].path.replace("\\", "/")
 	}
 	if (files && files[1]) {
-		profileImage = req.files[1].path.replace("\\", "/")
+		profileImage = "/" + req.files[1].path.replace("\\", "/")
 	}
 
 	try {
@@ -74,6 +74,66 @@ exports.editUser = async (req, res, next) => {
 			backgroundImage: user.backgroundImage,
 			introduction: user.introduction
 		})
+	} catch (err) {
+		next(err)
+	}
+}
+
+exports.getProfile = async (req, res, next) => {
+	const {userId} = req.params
+	try {
+		const user = await User.findById(userId)
+		if (!user) {
+			const error = new Error("User not found!")
+			error.statusCode = 404
+			next(error)
+		}
+		const {
+			name,
+			lastname,
+			job,
+			workDescription,
+			hobbyDescription,
+			profileImage,
+			backgroundImage,
+			introduction,
+			city,
+			country
+		} = user
+		res.json({
+			name,
+			lastname,
+			job,
+			workDescription,
+			hobbyDescription,
+			profileImage,
+			backgroundImage,
+			introduction,
+			city,
+			country
+		})
+	} catch (err) {
+		next(err)
+	}
+
+}
+
+exports.findProfile = async (req, res, next) => {
+	const {searchFilter} = req.body
+	try {
+		const users = await User.find()
+		const matchUsers = users
+			.filter(user => (user.name+ user.lastname).toLowerCase()
+				.includes(searchFilter.toLowerCase()))
+			.map(user => {
+				return {
+					id: user._id,
+					name: user.name,
+					lastname: user.lastname,
+					profileImage: user.profileImage
+				}
+			})
+		res.json(matchUsers)
 	} catch (err) {
 		next(err)
 	}

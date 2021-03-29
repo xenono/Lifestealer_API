@@ -12,6 +12,10 @@ const userController = require('../controllers/user')
 
 router.get('/user', isAuth, userController.getUser)
 
+router.get('/getProfile/:userId', isAuth, userController.getProfile)
+
+router.post('/findProfile', isAuth, userController.findProfile)
+
 router.post('/editUser', isAuth, userController.editUser)
 
 module.exports = router
