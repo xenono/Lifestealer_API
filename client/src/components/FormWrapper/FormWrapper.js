@@ -7,7 +7,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 40px;
 `;
 
 
@@ -33,7 +32,10 @@ const FormWrapper = ({children}) => {
 };
 
 FormWrapper.propTypes = {
-
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 };
 
 export default FormWrapper;

@@ -35,12 +35,12 @@ const userSchema = new Schema({
 	profileImage: {
 		type: String,
 		required: true,
-		default: "images/defaultProfilePicture.jpg"
+		default: "/images/defaultProfilePicture.jpg"
 	},
 	backgroundImage: {
 		type: String,
 		required: true,
-		default: "images/defaultBackgroundPicture.jpg"
+		default: "/images/defaultBackgroundPicture.jpg"
 	},
 	introduction: {
 		type: String,

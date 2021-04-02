@@ -1,4 +1,5 @@
 const User = require("../models/user")
+const { validationResult } = require("express-validator")
 
 exports.getUser = async (req, res, next) => {
 	try {
@@ -35,14 +36,20 @@ exports.getUser = async (req, res, next) => {
 }
 
 exports.editUser = async (req, res, next) => {
+	const errors = validationResult(req)
+	if(!errors.isEmpty()){
+		const error = new Error(errors.array()[0].msg)
+		error.statusCode = 422
+		return next(error)
+	}
 	const files = req.files
 	const {city, country, job, workDescription, introduction, hobbyDescription} = req.body
 	let backgroundImage, profileImage
-	if (files && files[0]) {
-		backgroundImage = "/" + req.files[0].path.replace("\\", "/")
+	if (files['backgroundImage'] && files['backgroundImage'][0]) {
+		backgroundImage = "/" + files['backgroundImage'][0].path.replace("\\", "/")
 	}
-	if (files && files[1]) {
-		profileImage = "/" + req.files[1].path.replace("\\", "/")
+	if (files['profileImage'] && files['profileImage'][0]) {
+		profileImage = "/" + files['profileImage'][0].path.replace("\\", "/")
 	}
 
 	try {

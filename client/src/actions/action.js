@@ -1,5 +1,4 @@
 import axios from "axios";
-import { generateBase64FromImage } from "../utils";
 
 export const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -10,12 +9,11 @@ export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILED = "ADD_POST_FAILED";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
-export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
-export const GET_PROFILE_FAILED = "GET_PROFILE_FAILED";
 export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS"
 export const EDIT_USER_FAILED = "EDIT_USER_FAILED"
+export const RESET_FORM_DATA = "RESET_FORM_DATA"
+export const API_URL = (process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : "") + "/api"
 
-export const API_URL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : ""
 
 export const fetchPosts = () => async dispatch => {
   try {
@@ -41,7 +39,7 @@ export const addPost = (title, content, color, file) => async dispatch => {
   formData.append("title", title);
   formData.append("content", content);
   formData.append("background", color);
-  formData.append("images", file);
+  formData.append("postImage", file);
   try {
     const post = await axios.post(API_URL + "/createPost", formData, {
       withCredentials: true,
@@ -49,18 +47,18 @@ export const addPost = (title, content, color, file) => async dispatch => {
         "Content-Type": "multipart/form-data"
       }
     });
-    dispatch({ type: ADD_POST_SUCCESS });
+    dispatch({ type: ADD_POST_SUCCESS, payload:post});
   } catch (err) {
     if (err.response)
       console.log(err.response.data.message);
     console.log(err);
-    dispatch({ type: ADD_POST_FAILED });
+    dispatch({ type: ADD_POST_FAILED, payload: err.response.data.message });
   }
 };
 
 export const logoutUser = () => async dispatch => {
   try {
-    const result = await axios.get(API_URL + "/logout", {
+    await axios.get(API_URL + "/logout", {
       withCredentials: true
     });
     dispatch({ type: LOGOUT_SUCCESS });
@@ -107,9 +105,11 @@ export const editUser = ({
   // formData.append("profileImage", profileImage);
   // formData.append("backgroundImage", backgroundImage);
   if(backgroundImage)
-    formData.append("images", backgroundImage);
+    // formData.append("images", backgroundImage);
+    formData.append("backgroundImage", backgroundImage);
   if(profileImage)
-    formData.append("images", profileImage);
+    // formData.append("images", profileImage);
+    formData.append("profileImage", profileImage);
   try {
     const data = await axios.post(API_URL + "/editUser", formData, {
       withCredentials: true,
@@ -119,10 +119,10 @@ export const editUser = ({
     });
     dispatch({type: EDIT_USER_SUCCESS, payload: data.data})
   } catch (err) {
-    // if (err)
-    //   console.log(err.response.data.message);
+    if (err)
+      console.log(err.response.data.message);
     console.log(err);
-    dispatch({type: EDIT_USER_FAILED})
+    dispatch({type: EDIT_USER_FAILED, payload: err.response.data.message})
   }
 };
 

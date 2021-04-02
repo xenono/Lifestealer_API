@@ -16,6 +16,13 @@ router.get('/getProfile/:userId', isAuth, userController.getProfile)
 
 router.post('/findProfile', isAuth, userController.findProfile)
 
-router.post('/editUser', isAuth, userController.editUser)
+router.post('/editUser', isAuth,[
+	body('city').not().isEmpty().withMessage("City is required!"),
+	body('country').not().isEmpty().withMessage("Country is required!"),
+	body('job').not().isEmpty().withMessage("Job is required!"),
+	body('workDescription').not().isEmpty().withMessage("workDescription is required!"),
+	body('introduction').not().isEmpty().withMessage("Introduction is required!"),
+	body('hobbyDescription').not().isEmpty().withMessage("hobbyDescription is required!"),
+],userController.editUser)
 
 module.exports = router
