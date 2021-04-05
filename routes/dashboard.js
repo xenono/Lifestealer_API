@@ -11,5 +11,7 @@ router.post('/createPost',[
 	body("title").trim().not().isEmpty().withMessage("Title is required!"),
 	body("content").trim().not().isEmpty().withMessage("Content is required!")
 ],isAuth, dashBoardController.createPost)
+router.post('/dropABlood',isAuth, dashBoardController.dropABlood)
+router.post('/addComment', isAuth, dashBoardController.addComment)
 
 module.exports = router

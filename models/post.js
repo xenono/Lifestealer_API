@@ -24,6 +24,32 @@ const postSchema = new Schema({
 		}
 
 	},
+	comments: [{
+		text: {
+			type: String,
+			required: true,
+		},
+		author: {
+			userId: {
+				type: Schema.Types.ObjectId,
+				ref: "User",
+				required: true
+			},
+			name: {
+				type: String,
+				required: true,
+
+			},
+			lastname: {
+				type: String,
+				required: true,
+			},
+			profileImage:{
+				type: String,
+				required: true
+			}
+		}
+	}],
 	title: {
 		type: String,
 		required: true,
@@ -39,6 +65,7 @@ const postSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	usersBlood: [ { type: String}]
 },{timestamps: true})
 
 module.exports = mongoose.model("Post", postSchema)
