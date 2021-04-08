@@ -16,6 +16,9 @@ router.get('/getProfile/:userId', isAuth, userController.getProfile)
 
 router.post('/findProfile', isAuth, userController.findProfile)
 
+router.post('/addFriend', isAuth, userController.addFriend)
+router.get('/getFriends', isAuth, userController.getFriends)
+
 router.post('/editUser', isAuth,[
 	body('city').not().isEmpty().withMessage("City is required!"),
 	body('country').not().isEmpty().withMessage("Country is required!"),

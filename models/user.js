@@ -53,7 +53,25 @@ const userSchema = new Schema({
 	hobbyDescription: {
 		type: String,
 		default: "Not specified."
-	}
+	},
+	friendsList: [{
+		_id: {
+			type: String,
+			required: true
+		},
+		name: {
+			type: String,
+			required: true
+		},
+		lastname: {
+			type: String,
+			required: true
+		},
+		profileImage: {
+			type: String,
+			required: true
+		}
+	}]
 
 })
 

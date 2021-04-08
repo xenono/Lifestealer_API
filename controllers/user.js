@@ -1,5 +1,5 @@
 const User = require("../models/user")
-const { validationResult } = require("express-validator")
+const {validationResult} = require("express-validator")
 
 exports.getUser = async (req, res, next) => {
 	try {
@@ -37,7 +37,7 @@ exports.getUser = async (req, res, next) => {
 
 exports.editUser = async (req, res, next) => {
 	const errors = validationResult(req)
-	if(!errors.isEmpty()){
+	if (!errors.isEmpty()) {
 		const error = new Error(errors.array()[0].msg)
 		error.statusCode = 422
 		return next(error)
@@ -93,7 +93,12 @@ exports.getProfile = async (req, res, next) => {
 		if (!user) {
 			const error = new Error("User not found!")
 			error.statusCode = 404
-			next(error)
+			return next(error)
+		}
+		if(userId === req.userId){
+			const error = new Error("This is logged user")
+			error.statusCode = 422
+			return next(error)
 		}
 		const {
 			name,
@@ -117,7 +122,7 @@ exports.getProfile = async (req, res, next) => {
 			backgroundImage,
 			introduction,
 			city,
-			country
+			country,
 		})
 	} catch (err) {
 		next(err)
@@ -130,7 +135,7 @@ exports.findProfile = async (req, res, next) => {
 	try {
 		const users = await User.find()
 		const matchUsers = users
-			.filter(user => (user.name+ user.lastname).toLowerCase()
+			.filter(user => (user.name + user.lastname).toLowerCase()
 				.includes(searchFilter.toLowerCase()))
 			.map(user => {
 				return {
@@ -142,6 +147,39 @@ exports.findProfile = async (req, res, next) => {
 			})
 		res.json(matchUsers)
 	} catch (err) {
+		next(err)
+	}
+}
+exports.addFriend = async (req, res, next) => {
+	const {userId} = req.body
+	try {
+		const addedUser = await User.findById(userId)
+		if (!addedUser) {
+			return next(new Error("User not found!"))
+		}
+		const loggedUser = await User.findById(req.userId)
+		const newFriend = {
+			_id: addedUser._id,
+			name: addedUser.name,
+			lastname: addedUser.lastname,
+			profileImage: addedUser.profileImage
+		}
+		loggedUser.friendsList.push(newFriend)
+		await loggedUser.save()
+		res.json(newFriend)
+	} catch (err) {
+		next(err)
+	}
+}
+
+exports.getFriends = async (req,res,next) => {
+	try {
+		const user = await User.findById(req.userId)
+		if(!user){
+			return next(new Error("User not found!"))
+		}
+		res.json(user.friendsList)
+	} catch(err) {
 		next(err)
 	}
 }
