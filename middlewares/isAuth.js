@@ -7,11 +7,14 @@ exports.isAuth = (req,res,next) => {
 	try {
 		decodedToken = jwt.verify(token, process.env.SECRET_JWT_KEY)
 	} catch(err){
+		res.cookie('isLoggedIn', false)
+		res.cookie('token', token, {httpOnly: true, expires: new Date(Date.now())})
 		err.statusCode = 500
 		return next(err)
 	}
 	if(!decodedToken){
 		const error = new Error("Not authenticated!")
+		res.cookie('isLoggedIn', false)
 		error.statusCode = 401
 		return next(error)
 	}
