@@ -158,14 +158,23 @@ exports.addFriend = async (req, res, next) => {
 			return next(new Error("User not found!"))
 		}
 		const loggedUser = await User.findById(req.userId)
-		const newFriend = {
+		const newLoggedUserFriend = {
 			_id: addedUser._id,
 			name: addedUser.name,
 			lastname: addedUser.lastname,
 			profileImage: addedUser.profileImage
 		}
-		loggedUser.friendsList.push(newFriend)
+		const newAddedUserFriend = {
+			_id: loggedUser._id,
+			name: loggedUser.name,
+			lastname: loggedUser.lastname,
+			profileImage: loggedUser.profileImage
+		}
+
+		loggedUser.friendsList.push(newLoggedUserFriend)
+		addedUser.friendsList.push(newAddedUserFriend)
 		await loggedUser.save()
+		await addedUser.save()
 		res.json(newFriend)
 	} catch (err) {
 		next(err)
