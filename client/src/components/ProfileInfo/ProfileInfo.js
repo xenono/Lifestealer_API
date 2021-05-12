@@ -15,13 +15,13 @@ const TileContent = styled.div`
   min-height: 440px;
 
   h1 {
-    font-size: 36px;
+    font-size: 3rem;
     color: #D80027;
     font-weight: normal;
   }
 
   p {
-    font-size: 30px;
+    font-size: 2.5rem;
     color: #444444;
   }
 `;
@@ -56,16 +56,16 @@ const TileListLi = styled.li`
 `;
 
 
-const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
+const ProfileInfo = ({ introContent, projectsContent, hobbyContent }) => {
   const [activeTile, setActiveTile] = useState(0);
 
   const intro = {
     title: "Quick Introductiom",
     content: introContent
   };
-  const work = {
-    title: "About my work",
-    content: workContent
+  const projects = {
+    title: "About my projects",
+    content: projectsContent
   };
   const hobby = {
     title: "About my hobby",
@@ -75,15 +75,15 @@ const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
 
   const content = {
     0: intro,
-    1: work,
+    1: projects,
     2: hobby
   };
 
   return (
     <Wrapper>
       <TilesList>
-        <TileListLi active={activeTile === 0 ? true : null} onClick={() => setActiveTile(0)}>Info</TileListLi>
-        <TileListLi active={activeTile === 1 ? true : null} onClick={() => setActiveTile(1)}>Work</TileListLi>
+        <TileListLi active={activeTile === 0 ? true : null} onClick={() => setActiveTile(0)}>Intro</TileListLi>
+        <TileListLi active={activeTile === 1 ? true : null} onClick={() => setActiveTile(1)}>Projects</TileListLi>
         <TileListLi active={activeTile === 2 ? true : null} onClick={() => setActiveTile(2)}>Hobby</TileListLi>
       </TilesList>
       <TileContent>
@@ -97,7 +97,7 @@ const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
 
 ProfileInfo.propTypes = {
   introContent: PropTypes.string,
-  workContent: PropTypes.string,
+  projectsContent: PropTypes.string,
   hobbyContent: PropTypes.string
 };
 

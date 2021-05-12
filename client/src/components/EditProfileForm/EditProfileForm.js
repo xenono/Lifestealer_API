@@ -30,7 +30,7 @@ const ButtonWrapper = styled.div`
   text-align: center;
 `;
 const EditProfileForm = ({
-                           user: { city, country, job, workDescription, introduction, hobbyDescription },
+                           user: { city, country, course, projectsDescription, introduction, hobbyDescription },
                            editUser,
                            error,
                            resetFormData,
@@ -42,14 +42,14 @@ const EditProfileForm = ({
     e.preventDefault();
     const city = e.target.city.value;
     const country = e.target.country.value;
-    const job = e.target.job.value;
-    const workDescription = e.target.workDescription.value;
+    const course = e.target.course.value;
+    const projectsDescription = e.target.projectsDescription.value;
     const introduction = e.target.introduction.value;
     const hobbyDescription = e.target.hobbyDescription.value;
     const profileImage = e.target.profileImage.files[0];
     const backgroundImage = e.target.backgroundImage.files[0];
     const userInfo = {
-      city, country, job, workDescription, introduction, hobbyDescription, profileImage, backgroundImage
+      city, country, course, projectsDescription, introduction, hobbyDescription, profileImage, backgroundImage
     };
     editUser(userInfo);
     setFormSubmission(true);
@@ -64,15 +64,15 @@ const EditProfileForm = ({
     <FormWrapper>
       {error && <Error message={error} />}
       <Form onSubmit={handleSubmit} enctype="multipart/form-data">
-        <UserInput label="City" placeholder="Your city." id="city" defaultValue={city} />
-        <UserInput label="Country" placeholder="Your country." id="country" defaultValue={country} />
-        <UserInput label="Job" placeholder="Your position at work." id="job" defaultValue={job} />
-        <UserInput label="Job description" placeholder="Say something about your job." id="workDescription"
-                   type="textarea" defaultValue={workDescription} />
-        <UserInput label="Quick introduction" placeholder="Say something about you and you life." id="introduction"
-                   type="textarea" defaultValue={introduction} />
-        <UserInput label="About you hobby" placeholder="Say something about your hobby." id="hobbyDescription"
-                   type="textarea" defaultValue={hobbyDescription} />
+        <UserInput label="City" placeholder="Your city." id="city" defaultValue={city === "Not specified." ? null : city} />
+        <UserInput label="Country" placeholder="Your country." id="country" defaultValue={country === "Not specified." ? null : country} />
+        <UserInput label="Course" placeholder="Course that you are studying." id="course" defaultValue={course === "Not specified." ? null : course} />
+        <UserInput label="Projects description" placeholder="Say something about some interesting project you have made! Link them!" id="projectsDescription"
+                   type="textarea" defaultValue={projectsDescription === "Not specified." ? null : projectsDescription} />
+        <UserInput label="Quick introduction" placeholder="Introduce user to your profile!" id="introduction"
+                   type="textarea" defaultValue={introduction === "Not specified." ? null : introduction} />
+        <UserInput label="About your hobby" placeholder="Write something about what you are doing in your free time!" id="hobbyDescription"
+                   type="textarea" defaultValue={hobbyDescription === "Not specified." ? null : hobbyDescription} />
         <FlexWrapper>
           <FileInput label="Profile image" id="profileImage" text="Choose image" />
           <FileInput label="Profile background image" id="backgroundImage" text="Choose image" />
@@ -88,8 +88,8 @@ const EditProfileForm = ({
 EditProfileForm.propTypes = {
   city: PropTypes.string,
   country: PropTypes.string,
-  job: PropTypes.string,
-  workDescription: PropTypes.string,
+  course: PropTypes.string,
+  projectsDescription: PropTypes.string,
   introduction: PropTypes.string,
   hobbyDescription: PropTypes.string,
   editUser: PropTypes.func,

@@ -36,7 +36,7 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req,res,next) => {
 	const {email, password} = req.body
 	try {
-		const user = await User.findOne({email})
+		let user = await User.findOne({email})
 		if (!user) {
 			const error = new Error("User does not exists.")
 			error.statusCode = 404
@@ -52,7 +52,7 @@ exports.login = async (req,res,next) => {
 		const token = jwt.sign({userId: user._id, }, process.env.SECRET_JWT_KEY,{expiresIn: "1h"})
 		res.cookie('token', token, {httpOnly: true})
 		res.cookie('isLoggedIn', true)
-		res.status(200).json({success: true})
+		res.status(200).json({_id:user._id})
 	}
 	catch (err) {
 		next(err)
@@ -63,5 +63,5 @@ exports.logout = (req,res,next) => {
 	const token = req.cookies.token
 	res.cookie('isLoggedIn', false)
 	res.cookie('token', token, {httpOnly: true, expires: new Date(Date.now())})
-	res.json({success: true})
+	res.status(200).json()
 }

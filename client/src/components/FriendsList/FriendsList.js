@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 
 import { getFriends as getFriendsAction, OPEN_CHATBOX } from "actions/action";
 import ProfilePicture from "../profilePicture/profilePicture";
-import HeadingOne from "../Headings/HeadingOne";
 
 
 const StickyWrapper = styled.div`
@@ -90,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
 FriendsList.propTypes = {
   getFriends: PropTypes.func,
   friendsList: PropTypes.array,
-  openChatbox: PropTypes.array
+  openChatbox: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsList);

@@ -63,11 +63,11 @@ const ProfilePage = ({
                          lastname,
                          profileImage,
                          backgroundImage,
-                         job,
+                         course,
                          country,
                          city,
                          introduction,
-                         workDescription,
+                         projectsDescription,
                          hobbyDescription
                        },
                        userId,
@@ -84,13 +84,13 @@ const ProfilePage = ({
       <ProfilePicture src={profileImage} mainProfile />
       <BasicInfo>
         <HeadingOne>{name} {lastname}</HeadingOne>
-        <HeadingTwo>{job}</HeadingTwo>
+        <HeadingTwo>Course: {course}</HeadingTwo>
         <HeadingTwo>{city}, {country}</HeadingTwo>
         {userId ? friendsList.length && friendsList.filter(friend => friend && friend._id === userId).length === 1 ?
           <FriendBox><FriendInfoWrapper><span>Friends</span> <Check src={checkIcon} /></FriendInfoWrapper></FriendBox> :
           <Button onClick={() => addFriend(userId)}>Add friend</Button> : null}
       </BasicInfo>
-      <ProfileInfo introContent={introduction} workContent={workDescription} hobbyContent={hobbyDescription} />
+      <ProfileInfo introContent={introduction} projectsContent={projectsDescription} hobbyContent={hobbyDescription} />
     </Wrapper>
   );
 };
@@ -101,11 +101,11 @@ ProfilePage.propTypes = {
   lastname: PropTypes.string,
   profileImage: PropTypes.string,
   backgroundImage: PropTypes.string,
-  job: PropTypes.string,
+  course: PropTypes.string,
   country: PropTypes.string,
   city: PropTypes.string,
   introduction: PropTypes.string,
-  workDescription: PropTypes.string,
+  projectsDescription: PropTypes.string,
   hobbyDescription: PropTypes.string,
   userId: PropTypes.string,
   addFriend: PropTypes.func,

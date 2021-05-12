@@ -15,11 +15,12 @@ import Error from 'components/Error/Error'
 
 
 const Wrapper = styled.div`
-  height: calc(100vh - 91px);
+  min-height: calc(100vh - 91px);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 20px 0;
 
 `;
 const FormWrapper = styled.div`
@@ -48,11 +49,11 @@ const Login = ({ isLoggedIn, login }) => {
     const email = e.target.email.value
     const password = e.target.password.value
     try {
-      await axios.post(API_URL + "/login", {
+      const userId = await axios.post(API_URL + "/login", {
         email,
         password
       }, { withCredentials: true });
-      login()
+      login(userId)
 
     } catch (err) {
       if(err.response && err.response.status === 404){
@@ -94,7 +95,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  login:() => dispatch(loginUser())
+  login:(id) => dispatch(loginUser(id))
 })
 Login.propTypes = {
   login: PropTypes.func.isRequired,

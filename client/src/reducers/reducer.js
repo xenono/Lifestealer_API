@@ -20,7 +20,8 @@ import {
   ADD_COMMENT_SUCCESS, ADD_FRIEND_SUCCESS,
   GET_FRIENDS_SUCCESS,
   GET_FRIENDS_FAILED,
-  OPEN_CHATBOX
+  OPEN_CHATBOX,
+  CLOSE_CHATBOX
 } from "actions/action";
 
 const cookies = new Cookies();
@@ -32,15 +33,16 @@ const initialState = {
   posts: [],
   activeChats: [],
   user: {
+    _id: "",
     name: "",
     lastname: "",
     profileImage: "",
-    job: "",
+    course: "",
     country: "",
     city: "",
     backgroundImage: "",
     introduction: "",
-    workDescription: "",
+    projectsDescription: "",
     hobbyDescription: "",
     friendsList: []
   },
@@ -75,7 +77,12 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
+        user: {
+          ...state.user,
+          _id: action.payload,
+        },
         isLoggedIn: true
+
       };
     case LOGIN_FAILED:
       return {
@@ -111,7 +118,7 @@ const rootReducer = (state = initialState, action) => {
     case EDIT_USER_SUCCESS:
       return {
         ...state,
-        user: { ...action.payload },
+        user: { ...state.user, ...action.payload },
         formData: {
           error: "",
           successSubmission: true
@@ -194,8 +201,14 @@ const rootReducer = (state = initialState, action) => {
     case OPEN_CHATBOX: {
       return {
         ...state,
-        activeChats: state.activeChats.find(i => i.member.name === action.payload.name) ? state.activeChats : [...state.activeChats, {member: {name : action.payload.name, lastname: action.payload.lastname, profileImage: action.payload.profileImage}}]
+        activeChats: state.activeChats.find(i => i.member.name === action.payload.name) ? state.activeChats : [...state.activeChats, {member: {_id: action.payload._id, name : action.payload.name, lastname: action.payload.lastname, profileImage: action.payload.profileImage}}]
       };
+    }
+    case CLOSE_CHATBOX : {
+      return {
+        ...state,
+        activeChats: state.activeChats.filter(i => i.member._id !== action.payload.id)
+      }
     }
     default:
       return {

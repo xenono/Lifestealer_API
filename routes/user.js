@@ -22,10 +22,13 @@ router.get('/getFriends', isAuth, userController.getFriends)
 router.post('/editUser', isAuth,[
 	body('city').not().isEmpty().withMessage("City is required!"),
 	body('country').not().isEmpty().withMessage("Country is required!"),
-	body('job').not().isEmpty().withMessage("Job is required!"),
-	body('workDescription').not().isEmpty().withMessage("workDescription is required!"),
+	body('course').not().isEmpty().withMessage("Course is required!"),
+	body('projectsDescription').not().isEmpty().withMessage("projectsDescription is required!"),
 	body('introduction').not().isEmpty().withMessage("Introduction is required!"),
 	body('hobbyDescription').not().isEmpty().withMessage("hobbyDescription is required!"),
 ],userController.editUser)
+
+router.post('/addMessage', isAuth, userController.addMessage)
+router.post('/getChat', isAuth, userController.getChat)
 
 module.exports = router

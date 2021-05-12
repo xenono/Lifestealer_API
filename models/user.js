@@ -22,15 +22,15 @@ const userSchema = new Schema({
 	},
 	city: {
 		type: String,
-		default: "Not specified"
+		default: "Not specified."
 	},
 	country: {
 		type: String,
-		default: "Not specified"
+		default: "Not specified."
 	},
-	job: {
+	course: {
 		type: String,
-		default: "Not specified"
+		default: "Not specified."
 	},
 	profileImage: {
 		type: String,
@@ -46,7 +46,7 @@ const userSchema = new Schema({
 		type: String,
 		default: "Not specified."
 	},
-	workDescription: {
+	projectsDescription: {
 		type: String,
 		default: "Not specified."
 	},

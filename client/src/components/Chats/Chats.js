@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   position: sticky;
   width: 100%;
   height: 540px;
-  top: calc(100% - 600px);
+  top: calc(100% - 580px);
 `;
 
 const SmallerProfilePicture = styled(ProfilePicture)`
@@ -30,7 +30,7 @@ const ChatBoxes = styled.div`
   margin-bottom: 10px;
 `
 
-const Chats = ({ activeChats }) => {
+const Chats = ({ activeChats, cookies }) => {
   const [currentChatBox, setCurrentChatBox] = useState(null);
   useEffect(() => {
     setCurrentChatBox(activeChats[activeChats.length - 1])

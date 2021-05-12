@@ -1,9 +1,9 @@
 const Post = require('../models/post')
 const User = require('../models/user')
 const {validationResult} = require('express-validator')
+const io = require('../socket')
 
 exports.getPosts = async (req, res, next) => {
-
 	try {
 		let posts = await Post.find()
 
@@ -69,6 +69,7 @@ exports.createPost = async (req, res, next) => {
 			}
 		})
 		await post.save()
+		io.getIO().emit("updatePosts", {action: "updatePosts"})
 		res.json(post)
 	} catch (err) {
 		next(err)

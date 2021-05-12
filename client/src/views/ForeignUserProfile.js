@@ -15,11 +15,11 @@ const ForeignUserProfile = ({ cookies, match }) => {
     lastname: "",
     profileImage: "",
     backgroundImage: "",
-    job: "",
+    course: "",
     country: "",
     city: "",
     introduction: "",
-    workDescription: "",
+    projectsDescription: "",
     hobbyDescription: "",
     friendsList: []
   })
