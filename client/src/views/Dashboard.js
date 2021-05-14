@@ -33,7 +33,7 @@ const StyledButton = styled(Button)`
 const Grid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns:  28% 42% 22.5%;
+  grid-template-columns:  24% 49% 12%;
   grid-column-gap: 2.5%;
 `;
 

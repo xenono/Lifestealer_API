@@ -8,12 +8,13 @@ import ProfilePicture from "../profilePicture/profilePicture";
 
 
 const StickyWrapper = styled.div`
+    grid-column-start: 3;
+  grid-column-end: 5;
   position: sticky;
   width: 100%;
   height: calc(100vh);
   top: 0;
   bottom: 0;
-  border-left: 4px solid ${({ theme }) => theme.tertiary};
 `;
 
 const FriendsUl = styled.ul`
@@ -48,6 +49,7 @@ const StyledProfilePicture = styled(ProfilePicture)`
 const Heading = styled.h1`
   font-size: 2rem;
   text-align: center;
+  width: 100%;
   padding: 20px;
   margin: 0;
   border-bottom: 2px solid ${({ theme }) => theme.tertiary};
